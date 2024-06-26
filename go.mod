@@ -1,4 +1,4 @@
-module clean-inprogress-commit-satatus
+module bitbucket-tools
 
 go 1.22.4
 

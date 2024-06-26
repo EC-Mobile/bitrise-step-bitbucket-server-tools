@@ -43,7 +43,7 @@ deps:
 
 toolkit:
   go:
-    package_name: clean-inprogress-commit-satatus
+    package_name: bitbucket-server-tools
 
 
 inputs:
