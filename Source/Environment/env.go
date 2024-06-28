@@ -76,5 +76,5 @@ func DumpOutputs() {
 	fmt.Println()
 	fmt.Println("........................................")
 	fmt.Println("Outputs: ")
-	fmt.Println("Verification Skipped: " + SKIPPED_VERIFICATION)
+	fmt.Println("Verification Skipped: " + os.Getenv("SKIPPED_VERIFICATION"))
 }
