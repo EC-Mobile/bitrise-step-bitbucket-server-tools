@@ -5,9 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
-	"os"
 )
 
 type Reviewer struct {
@@ -24,6 +22,11 @@ type PullRequest struct {
 	Closed    bool       `json:"closed"`
 	FromRef   Ref        `json:"fromRef"`
 	Reviewers []Reviewer `json:"reviewers"`
+	Links     struct {
+		Self []struct {
+			HRef string `json:"href"`
+		} `json:"self"`
+	} `json:"links"`
 }
 
 func GetPullRequest(id string) PullRequest {
@@ -35,14 +38,19 @@ func GetPullRequest(id string) PullRequest {
 	response, err := client.Do(req)
 
 	if err != nil {
-		fmt.Print(err.Error())
-		os.Exit(1)
+		fmt.Println(err.Error())
 		return PullRequest{}
 	}
 
-	responseData, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Fatal(err)
+	responseData, readError := io.ReadAll(response.Body)
+	if readError != nil {
+		fmt.Println(readError.Error())
+		return PullRequest{}
+	}
+
+	if response.StatusCode < 200 || response.StatusCode > 210 {
+		fmt.Printf("Invalid status code: %d", response.StatusCode)
+		fmt.Println()
 		return PullRequest{}
 	}
 

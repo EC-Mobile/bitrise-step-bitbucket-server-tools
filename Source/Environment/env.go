@@ -46,13 +46,13 @@ func LoadEnvironment() {
 	PR_TITLE = os.Getenv("PR_TITLE")
 	PR_ID = os.Getenv("PR_ID")
 
-	DumpEnvironment()
+	DumpInputs()
 	fmt.Println("Loading env finished !!")
 }
 
-func DumpEnvironment() {
+func DumpInputs() {
 	fmt.Println("-----------------------------------------")
-	fmt.Println("Environment: ")
+	fmt.Println("Inputs: ")
 	fmt.Println("Bitbucket Base Url: " + BITBUCKET_DOMAIN)
 	fmt.Println("Bitbucket Project Key: " + BITBUCKET_PROJECT_KEY)
 	fmt.Println("Bitbucket Repo Slug: " + BITBUCKET_REPO_SLUG)
@@ -72,4 +72,15 @@ func DumpEnvironment() {
 	fmt.Println("Pull Request Id: " + PR_ID)
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")
+}
+
+const (
+	SKIP_VERIFICATION = "SKIP_VERIFICATION"
+)
+
+func DumpOutputs() {
+	fmt.Println()
+	fmt.Println("........................................")
+	fmt.Println("Outputs: ")
+	fmt.Println("Verification Skipped: " + SKIP_VERIFICATION)
 }

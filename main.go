@@ -17,8 +17,10 @@ func main() {
 	default:
 		fmt.Println("Invalid function selected !!")
 	}
+	env.DumpOutputs()
 	println("-----------------------------------------")
 
+	fmt.Println()
 	fmt.Println("Function is completed !")
 	fmt.Println("Tools signing off :)")
 }
