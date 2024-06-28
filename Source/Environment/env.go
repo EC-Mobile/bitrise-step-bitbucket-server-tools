@@ -8,19 +8,17 @@ import (
 )
 
 var (
-	BITBUCKET_ACCESS_TOKEN string
-	BITBUCKET_DOMAIN       string
-	BITBUCKET_PROJECT_KEY  string
-	BITBUCKET_REPO_SLUG    string
+	BITBUCKET_API_ACCESS_TOKEN string
+	BITBUCKET_DOMAIN           string
+	BITBUCKET_PROJECT_KEY      string
+	BITBUCKET_REPO_SLUG        string
 
 	BITRISE_API_ACCESS_TOKEN string
 	BITRISE_APP_SLUG         string
-	BITRISE_BUILD_SLUG       string
 
-	FUNCTION    string
-	COMMIT_HASH string
-	PR_TITLE    string
-	PR_ID       string
+	FUNCTION           string
+	PR_ID              string
+	BITRISE_BUILD_SLUG string
 )
 
 func LoadEnvironment() {
@@ -32,19 +30,17 @@ func LoadEnvironment() {
 		fmt.Println()
 	}
 
-	BITBUCKET_ACCESS_TOKEN = os.Getenv("BITBUCKET_ACCESS_TOKEN")
+	BITBUCKET_API_ACCESS_TOKEN = os.Getenv("BITBUCKET_API_ACCESS_TOKEN")
 	BITBUCKET_DOMAIN = os.Getenv("BITBUCKET_DOMAIN")
 	BITBUCKET_PROJECT_KEY = os.Getenv("BITBUCKET_PROJECT_KEY")
 	BITBUCKET_REPO_SLUG = os.Getenv("BITBUCKET_REPO_SLUG")
 
 	BITRISE_API_ACCESS_TOKEN = os.Getenv("BITRISE_API_ACCESS_TOKEN")
 	BITRISE_APP_SLUG = os.Getenv("BITRISE_APP_SLUG")
-	BITRISE_BUILD_SLUG = os.Getenv("BITRISE_BUILD_SLUG")
 
 	FUNCTION = os.Getenv("FUNCTION")
-	COMMIT_HASH = os.Getenv("COMMIT_HASH")
-	PR_TITLE = os.Getenv("PR_TITLE")
 	PR_ID = os.Getenv("PR_ID")
+	BITRISE_BUILD_SLUG = os.Getenv("BITRISE_BUILD_SLUG")
 
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
@@ -56,31 +52,29 @@ func DumpInputs() {
 	fmt.Println("Bitbucket Base Url: " + BITBUCKET_DOMAIN)
 	fmt.Println("Bitbucket Project Key: " + BITBUCKET_PROJECT_KEY)
 	fmt.Println("Bitbucket Repo Slug: " + BITBUCKET_REPO_SLUG)
-	fmt.Printf("Bitbucket Token Provided: %t", len(BITBUCKET_ACCESS_TOKEN) != 0)
+	fmt.Printf("Bitbucket Token Provided: %t", len(BITBUCKET_API_ACCESS_TOKEN) != 0)
 	fmt.Println()
 	fmt.Println()
 
 	fmt.Println("Bitrise App Slug: " + BITRISE_APP_SLUG)
-	fmt.Println("Bitrise Build Slug: " + BITRISE_BUILD_SLUG)
 	fmt.Printf("Bitrise Token Provided: %t", len(BITRISE_API_ACCESS_TOKEN) != 0)
 	fmt.Println()
 	fmt.Println()
 
 	fmt.Println("Selected Function: " + FUNCTION)
-	fmt.Println("Commit Hash: " + COMMIT_HASH)
-	fmt.Println("Pull Request Title: " + PR_TITLE)
 	fmt.Println("Pull Request Id: " + PR_ID)
+	fmt.Println("Bitrise Build Slug: " + BITRISE_BUILD_SLUG)
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")
 }
 
 const (
-	SKIP_VERIFICATION = "SKIP_VERIFICATION"
+	SKIPPED_VERIFICATION = "SKIPPED_VERIFICATION"
 )
 
 func DumpOutputs() {
 	fmt.Println()
 	fmt.Println("........................................")
 	fmt.Println("Outputs: ")
-	fmt.Println("Verification Skipped: " + SKIP_VERIFICATION)
+	fmt.Println("Verification Skipped: " + SKIPPED_VERIFICATION)
 }

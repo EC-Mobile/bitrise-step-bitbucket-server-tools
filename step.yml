@@ -8,28 +8,20 @@
 # - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
 
 title: |-
-  Clean InProgress Build Status
+  Bitbucket Server Tools
 summary: |
-  This step allows you to clean up inprogress build status of given commit.
+  This step will check if the PR Title contains "[SV]" tag, it will stop the build on bit rise and add the commit status "FAILED" on the head commit of the PR.
 description: |
-  This step uses bitbucket rest api V1.0, it expects your domain installed bitbucket rest api.
-  It will call the following API with provided params:
-  **{YOUR DOMAIN}**/rest/build-status/1.0/commits/**{COMMIT}**
-  
-  **API deatils can be found here:**
-    https://docs.atlassian.com/bitbucket-server/rest/5.16.0/bitbucket-rest.html#idm8287391664
-website: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-clean-inprogress-commit-satatus
-source_code_url: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-clean-inprogress-commit-satatus
-support_url: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-clean-inprogress-commit-satatus
-host_os_tags:
-  - osx-10.10
-  - ubuntu-16.04
+  Checkout details for available functions and how they work:
+  https://github.com/KageRiyuu/bitrise-step-bitbucket-server-tools/blob/main/README.md
+website: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-tools/tree/main
+source_code_url: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-tools/tree/main
+support_url: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-tools/tree/main
 type_tags:
   - utility
 
-is_requires_admin_user: true
 is_always_run: false
-is_skippable: false
+is_skippable: true
 run_if: ""
 
 deps:
@@ -43,43 +35,88 @@ deps:
 
 toolkit:
   go:
-    package_name: bitbucket-server-tools
+    package_name: bitbucket-tools
 
 
 inputs:
 
-  - GIT_ACCESS_TOKEN: 
+  - BITBUCKET_API_ACCESS_TOKEN:
     opts:
-      title: Access Token
+      category: Bitbucket
+      title: Bitbucket Access Token
       summary: Token to access you bitbucket account
-      description: |
-        Access token should have permission to create repo.
-        This step uses bitbucket rest api V1.0, it expects your domain installed rest api.
-        It will call the following API with provided params:
-          **{YOUR DOMAIN}**/rest/build-status/1.0/commits/**{COMMIT}**
-        
-        **API deatils can be found here:**
-          https://docs.atlassian.com/bitbucket-server/rest/5.16.0/bitbucket-rest.html#idm8287391664
       is_required: true
       is_sensitive: true
 
-  - GIT_BASE_URL: 
+  - BITBUCKET_DOMAIN:
     opts:
-      title: BitBucket Server URL
-      summary: Base url to your bitbucket server, e.g; https://myrepodomain.com.
-      description: |
-        This step uses bitbucket rest api V1.0, it expects your domain installed rest api.
-        It will call the following API with provided params:
-          **{YOUR DOMAIN}**/rest/api/1.0/projects/**{GIT_PROJECT}**/repos/**{GIT_REPO}**/pull-requests
-        
-        **API deatils can be found here:**
-          https://docs.atlassian.com/bitbucket-server/rest/5.16.0/bitbucket-rest.html#idm8287391664
+      category: Bitbucket
+      title: Bitbucket Server Domain Name 
+      summary: Your Bitbucket server url
       is_required: true
+      is_sensitive: false
 
-  - COMMIT: 
+  - BITBUCKET_PROJECT_KEY:
     opts:
-      title: Commit Hash.
-      summary: Commit how's status you want to reset.
-      description: |
-        It should be a full length hash value of your commit.
+      category: Bitbucket
+      title: Bitbucket Project Key
+      summary: Key of your Project in Bitbucket
       is_required: true
+      is_sensitive: false
+
+  - BITBUCKET_REPO_SLUG:
+    opts:
+      category: Bitbucket
+      title: Bitbucket Repo Slug
+      summary: Id of the repository in Bitbucket
+      is_required: true
+      is_sensitive: false
+
+  - BITRISE_API_ACCESS_TOKEN:
+    opts:
+      category: Bitrise
+      title: Bitrise Access Token
+      summary: Auth token needed to call Bitrise Apis
+      is_required: true
+      is_sensitive: true
+
+  - BITRISE_APP_SLUG: $BITRISE_APP_SLUG
+    opts:
+      category: Bitrise
+      title: Bitrise App Slug
+      summary: Id of the app in Bitrise
+      is_required: true
+      is_sensitive: false
+
+  - FUNCTION: "Skip Verification"
+    opts:
+      category: Function
+      title: Function
+      summary: Function you want to perform
+      is_required: true
+      is_sensitive: false
+      value_options:
+      - "Skip Verification"
+      - "Clean PR (Not Available)"
+
+  - PR_ID: $BITRISE_PULL_REQUEST
+    opts:
+      category: Function
+      title: Pull Request Id
+      summary: Id of the Pull Request
+      is_required: false
+      is_sensitive: false
+
+  - BITRISE_BUILD_SLUG: $BITRISE_BUILD_SLUG
+    opts:
+      category: Function
+      title: Bitrise Build Slug
+      summary: Id of the Build in Bitbucket
+      is_required: false
+      is_sensitive: false
+
+outputs:
+  - SKIPPED_VERIFICATION:  
+    opts:    
+      title: Skipped Verification
+      summary: True or False, telling is verfication skipped or not

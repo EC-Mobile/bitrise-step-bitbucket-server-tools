@@ -7,5 +7,5 @@ func GetUrl() string {
 }
 
 func GetToken() string {
-	return "Bearer " + env.BITBUCKET_ACCESS_TOKEN
+	return "Bearer " + env.BITBUCKET_API_ACCESS_TOKEN
 }

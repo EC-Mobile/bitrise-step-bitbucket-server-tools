@@ -14,7 +14,7 @@ func PerformSkipVerification() {
 	fmt.Println()
 	fmt.Println("Reseting Export Values....")
 	fmt.Println("........................................")
-	os.Setenv(env.SKIP_VERIFICATION, strconv.FormatBool(false))
+	os.Setenv(env.SKIPPED_VERIFICATION, strconv.FormatBool(false))
 
 	fmt.Println()
 	fmt.Println("Fetching the PR info....")
@@ -60,7 +60,7 @@ func PerformSkipVerification() {
 		fmt.Println()
 		fmt.Println("Exporting Results....")
 		fmt.Println("........................................")
-		os.Setenv(env.SKIP_VERIFICATION, strconv.FormatBool(buildAborted))
+		os.Setenv(env.SKIPPED_VERIFICATION, strconv.FormatBool(buildAborted))
 		fmt.Println("Exported !!!")
 	}
 }
