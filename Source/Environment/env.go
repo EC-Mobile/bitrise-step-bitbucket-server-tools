@@ -30,17 +30,17 @@ func LoadEnvironment() {
 		fmt.Println()
 	}
 
-	BITBUCKET_API_ACCESS_TOKEN = os.Getenv("BITBUCKET_API_ACCESS_TOKEN")
-	BITBUCKET_DOMAIN = os.Getenv("BITBUCKET_DOMAIN")
-	BITBUCKET_PROJECT_KEY = os.Getenv("BITBUCKET_PROJECT_KEY")
-	BITBUCKET_REPO_SLUG = os.Getenv("BITBUCKET_REPO_SLUG")
+	BITBUCKET_API_ACCESS_TOKEN = os.Getenv("bitbucket_api_access_token")
+	BITBUCKET_DOMAIN = os.Getenv("bitbucket_domain")
+	BITBUCKET_PROJECT_KEY = os.Getenv("bitbucket_project_key")
+	BITBUCKET_REPO_SLUG = os.Getenv("bitbucket_repo_slug")
 
-	BITRISE_API_ACCESS_TOKEN = os.Getenv("BITRISE_API_ACCESS_TOKEN")
-	BITRISE_APP_SLUG = os.Getenv("BITRISE_APP_SLUG")
+	BITRISE_API_ACCESS_TOKEN = os.Getenv("bitrise_api_access_token")
+	BITRISE_APP_SLUG = os.Getenv("bitrise_app_slug")
 
-	FUNCTION = os.Getenv("FUNCTION")
-	PR_ID = os.Getenv("PR_ID")
-	BITRISE_BUILD_SLUG = os.Getenv("BITRISE_BUILD_SLUG")
+	FUNCTION = os.Getenv("function")
+	PR_ID = os.Getenv("pr_id")
+	BITRISE_BUILD_SLUG = os.Getenv("bitrise_build_slug")
 
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
