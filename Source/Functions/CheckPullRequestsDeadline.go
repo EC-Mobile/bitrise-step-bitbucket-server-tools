@@ -44,7 +44,7 @@ func PerformCheckPullRequestsDeadline() {
 		fmt.Println()
 		fmt.Println("Preparing output...")
 		fmt.Println("........................................")
-		output := prepareOutput(pullRequests)
+		output := prepareOutput(isDeadlinesNear, pullRequests)
 		outputJson := msc.ConvertToJson(output, true)
 		fmt.Println("Output prepared !!")
 
@@ -124,11 +124,13 @@ type pullRequestsInfo struct {
 }
 
 type pullRequestsDeadlineOutup struct {
-	PullRequests []pullRequestsInfo `json:"pullRequests"`
+	AreDeadlinesNear bool               `json:"areDeadlinesNear"`
+	PullRequests     []pullRequestsInfo `json:"pullRequests"`
 }
 
-func prepareOutput(pullRequests []bitbucket.PullRequest) pullRequestsDeadlineOutup {
+func prepareOutput(areDeadlinesNear bool, pullRequests []bitbucket.PullRequest) pullRequestsDeadlineOutup {
 	output := pullRequestsDeadlineOutup{}
+	output.AreDeadlinesNear = areDeadlinesNear
 	output.PullRequests = []pullRequestsInfo{}
 
 	for _, pullRequest := range pullRequests {
