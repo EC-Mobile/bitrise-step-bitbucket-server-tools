@@ -14,8 +14,8 @@ func main() {
 	switch env.FUNCTION {
 	case function.SKIP_VERIFICATION:
 		function.PerformSkipVerification()
-	case function.CHECK_PULL_REQUEST_DEADLINES:
-		function.PerformCheckPullRequestDeadlines()
+	case function.CHECK_PULL_REQUESTS_DEADLINE:
+		function.PerformCheckPullRequestsDeadline()
 	default:
 		fmt.Println("Invalid function selected !!")
 	}

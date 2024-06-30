@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func PerformCheckPullRequestDeadlines() {
+func PerformCheckPullRequestsDeadline() {
 	fmt.Println()
 	fmt.Println("Reseting Export Values....")
 	fmt.Println("........................................")

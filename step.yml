@@ -89,6 +89,7 @@ inputs:
       is_sensitive: false
       value_options:
       - "Skip Verification"
+      - "Check Pull Requests Deadline"
       - "Clean PR (Not Available)"
 
   - pr_id: $BITRISE_PULL_REQUEST

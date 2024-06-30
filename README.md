@@ -22,7 +22,7 @@ Function Inputs:
 ## Available Functions
 
 1. Skip Verification
-2. Check Pull Request Deadlines
+2. Check Pull Requests Deadline
 
 # Skip Verification
 This function will check if the PR Title contains "[SV]" tag, it will stop the build on bit rise and add the commit status "FAILED" on the head commit of the PR.
@@ -34,7 +34,7 @@ This function will check if the PR Title contains "[SV]" tag, it will stop the b
 ## Outputs
 - SKIPPED_VERIFICATION:        True if found [SV] tag and aborted build, otherwise False.
 
-# Check Pull Request Deadlines
+# Check Pull Requests Deadline
 This function will check all unapporved open Pull Requests and prepare a Json data `PULL_REQUESTS_DEADLINE`. It also checks tag [Deadline dd/mm] in Pull Request title and create a boolean flag `PULL_REQUESTS_DEADLINE_NEAR`. 
 
 Pull Request title example:
