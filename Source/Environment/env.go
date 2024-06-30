@@ -3,6 +3,7 @@ package env
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
@@ -16,9 +17,11 @@ var (
 	BITRISE_API_ACCESS_TOKEN string
 	BITRISE_APP_SLUG         string
 
-	FUNCTION           string
-	PR_ID              string
-	BITRISE_BUILD_SLUG string
+	FUNCTION                string
+	PR_ID                   string
+	BITRISE_BUILD_SLUG      string
+	EMAILS                  string
+	REQUIRED_APPROVAL_COUNT int
 )
 
 func LoadEnvironment() {
@@ -41,6 +44,8 @@ func LoadEnvironment() {
 	FUNCTION = os.Getenv("function")
 	PR_ID = os.Getenv("pr_id")
 	BITRISE_BUILD_SLUG = os.Getenv("bitrise_build_slug")
+	EMAILS = os.Getenv("emails")
+	REQUIRED_APPROVAL_COUNT, _ = strconv.Atoi(os.Getenv("required_approval_count"))
 
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
@@ -64,17 +69,26 @@ func DumpInputs() {
 	fmt.Println("Selected Function: " + FUNCTION)
 	fmt.Println("Pull Request Id: " + PR_ID)
 	fmt.Println("Bitrise Build Slug: " + BITRISE_BUILD_SLUG)
+	fmt.Println("Emails: " + EMAILS)
+	fmt.Printf("Required Approvals Count: %d", REQUIRED_APPROVAL_COUNT)
+	fmt.Println()
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")
 }
 
 const (
 	SKIPPED_VERIFICATION = "SKIPPED_VERIFICATION"
+
+	PULL_REQUESTS_DEADLINE_NEAR = "PULL_REQUESTS_DEADLINE_NEAR"
+	PULL_REQUESTS_DEADLINE      = "PULL_REQUESTS_DEADLINE"
 )
 
 func DumpOutputs() {
 	fmt.Println()
 	fmt.Println("........................................")
 	fmt.Println("Outputs: ")
-	fmt.Println("Verification Skipped: " + os.Getenv("SKIPPED_VERIFICATION"))
+	fmt.Println("Verification Skipped: " + os.Getenv(SKIPPED_VERIFICATION))
+
+	fmt.Printf("Pull Requests Deadline Near: %s\n", os.Getenv(PULL_REQUESTS_DEADLINE_NEAR))
+	fmt.Println("Pull Requests Deadline Info: \n" + os.Getenv(PULL_REQUESTS_DEADLINE))
 }

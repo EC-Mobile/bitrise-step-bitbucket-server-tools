@@ -12,6 +12,10 @@ type Reviewer struct {
 	Approved bool `json:"approved"`
 }
 
+type User struct {
+	EmailAddress string `json:"emailAddress"`
+}
+
 type Ref struct {
 	LatestCommit string `json:"latestCommit"`
 }
@@ -27,6 +31,9 @@ type PullRequest struct {
 			HRef string `json:"href"`
 		} `json:"self"`
 	} `json:"links"`
+	Author struct {
+		User User `json:"user"`
+	} `json:"author"`
 }
 
 func GetPullRequest(id string) PullRequest {
