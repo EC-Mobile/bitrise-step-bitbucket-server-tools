@@ -54,15 +54,17 @@ You can use this Json Data and Flag to perform operation e.g Notify Members to p
 ### Sample JSON `PULL_REQUESTS_DEADLINE`
 ```
 {
-    "isDeadlineNear": true,
+    "areDeadlinesNear": true,
     "pullRequests": [
         {
-            "title": "[Deadline: 1/7][PROJ-12345][BUG][Deep Linking] - Web view 02 page can not be loaded completely.",
-            "url": "https://xxxx/projects/xxx/repos/xxxx/pull-requests/xxx"
+            "title": "[Deadline: 1/7][PRJ-12345] - Web view 02 page can not be loaded completely and once close it by tapping back, will open again automatically when tap RUNA banner under MEN gender",
+            "url": "https://xxxxxxxm/projects/xxxxxx/repos/xxxxxxxxx/pull-requests/1403",
+            "isDeadlineNear": true
         },
         {
-            "title": "[Deadline: 20/7][PROJ-67890][BUG][Lose Connection] - Home Screen is flickering",
-            "url": "https://xxxx/projects/xxx/repos/xxxx/pull-requests/xxx"
+            "title": "[Deadline: 15/7][PRJ-2569] - Will transfer to native search result by tapping RUNA when RUNA link format",
+            "url": "https://xxxxxxxm/projects/xxxxxx/repos/xxxxxxxxx/pull-requests/1403",
+            "isDeadlineNear": true
         }
     ]
 }
