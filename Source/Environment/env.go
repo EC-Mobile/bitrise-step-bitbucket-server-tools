@@ -3,6 +3,7 @@ package env
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"strconv"
 
 	"github.com/joho/godotenv"
@@ -108,4 +109,13 @@ func DumpOutputs() {
 	fmt.Printf("Pull Requests Deadline Near: %s\n", os.Getenv(PULL_REQUESTS_DEADLINE_NEAR))
 	fmt.Println("Pull Requests Deadline Info: \n" + os.Getenv(PULL_REQUESTS_DEADLINE))
 	fmt.Println("Response Body: \n" + os.Getenv(RESPONSE_BODY))
+}
+
+func Setenv(key string, value string) {
+	c := exec.Command("envman", "add", "--key", key, "--value", value)
+	err := c.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+	os.Setenv(key, value)
 }

@@ -5,7 +5,6 @@ import (
 	env "bitbucket-tools/Source/Environment"
 	msc "bitbucket-tools/Source/Msc"
 	"fmt"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -16,8 +15,8 @@ func PerformCheckPullRequestsDeadline() {
 	fmt.Println()
 	fmt.Println("Reseting Export Values....")
 	fmt.Println("........................................")
-	os.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(false))
-	os.Setenv(env.PULL_REQUESTS_DEADLINE, "")
+	env.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(false))
+	env.Setenv(env.PULL_REQUESTS_DEADLINE, "")
 
 	fmt.Println()
 	fmt.Println("Fetching all Open PRs info....")
@@ -51,8 +50,8 @@ func PerformCheckPullRequestsDeadline() {
 		fmt.Println()
 		fmt.Println("Exporting Results....")
 		fmt.Println("........................................")
-		os.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(isDeadlinesNear))
-		os.Setenv(env.PULL_REQUESTS_DEADLINE, outputJson)
+		env.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(isDeadlinesNear))
+		env.Setenv(env.PULL_REQUESTS_DEADLINE, outputJson)
 		fmt.Println("Exported !!!")
 	}
 }

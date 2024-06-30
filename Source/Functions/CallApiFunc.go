@@ -4,7 +4,6 @@ import (
 	env "bitbucket-tools/Source/Environment"
 	network "bitbucket-tools/Source/Network"
 	"fmt"
-	"os"
 	"strings"
 )
 
@@ -12,7 +11,7 @@ func PerformApiCall() {
 	fmt.Println()
 	fmt.Println("Reseting Export Values....")
 	fmt.Println("........................................")
-	os.Setenv(env.RESPONSE_BODY, "")
+	env.Setenv(env.RESPONSE_BODY, "")
 
 	fmt.Println()
 	fmt.Println("Preparing headers....")
@@ -32,7 +31,7 @@ func PerformApiCall() {
 	fmt.Println()
 	fmt.Println("Exporting Results....")
 	fmt.Println("........................................")
-	os.Setenv(env.RESPONSE_BODY, response)
+	env.Setenv(env.RESPONSE_BODY, response)
 	fmt.Println("Exported !!!")
 }
 
