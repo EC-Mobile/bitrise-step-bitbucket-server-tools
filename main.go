@@ -16,6 +16,8 @@ func main() {
 		function.PerformSkipVerification()
 	case function.CHECK_PULL_REQUESTS_DEADLINE:
 		function.PerformCheckPullRequestsDeadline()
+	case function.CALL_API:
+		function.PerformApiCall()
 	default:
 		fmt.Println("Invalid function selected !!")
 	}

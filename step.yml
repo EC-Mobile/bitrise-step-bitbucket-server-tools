@@ -90,6 +90,7 @@ inputs:
       value_options:
       - "Skip Verification"
       - "Check Pull Requests Deadline"
+      - "Call Api"
       - "Clean PR (Not Available)"
 
   - pr_id: $BITRISE_PULL_REQUEST
@@ -132,6 +133,42 @@ inputs:
       is_required: false
       is_sensitive: false
 
+  - method:
+    opts:
+      category: Function
+      title: Http Method
+      summary: One of the HTTP call method
+      is_required: false
+      is_sensitive: false
+      value_options:
+      - "GET"
+      - "POST"
+
+  - url:
+    opts:
+      category: Function
+      title: URL
+      summary: HTTP link to resouce.
+      is_required: false
+      is_sensitive: false
+
+  - headers:
+    opts:
+      category: Function
+      title: Headers
+      summary: list of Key/Value pair.
+      description: e.g Key 1|Value 1|Key 2|Value 2|.....
+      is_required: false
+      is_sensitive: false
+
+  - body:
+    opts:
+      category: Function
+      title: Body
+      summary: String data to be used in function e.g. Api Call
+      is_required: false
+      is_sensitive: false
+
 outputs:
   - SKIPPED_VERIFICATION:  
     opts:    
@@ -147,3 +184,8 @@ outputs:
     opts:    
       title: Pull Requests Deadline Details
       summary: Details of all Open and Unapproved Pull Requests. Check `README.md` for details.
+  
+  - RESPONSE_BODY: 
+    opts:    
+      title: Response Body
+      summary: Response sent by the server.

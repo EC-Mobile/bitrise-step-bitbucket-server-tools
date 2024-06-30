@@ -23,6 +23,10 @@ var (
 	EMAILS                  string
 	REQUIRED_APPROVAL_COUNT int
 	TITLE                   string
+	METHOD                  string
+	URL                     string
+	HEADERS                 string
+	BODY                    string
 )
 
 func LoadEnvironment() {
@@ -48,6 +52,10 @@ func LoadEnvironment() {
 	EMAILS = os.Getenv("emails")
 	REQUIRED_APPROVAL_COUNT, _ = strconv.Atoi(os.Getenv("required_approval_count"))
 	TITLE = os.Getenv("title")
+	METHOD = os.Getenv("method")
+	URL = os.Getenv("url")
+	HEADERS = os.Getenv("headers")
+	BODY = os.Getenv("body")
 
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
@@ -74,6 +82,10 @@ func DumpInputs() {
 	fmt.Println("Emails: " + EMAILS)
 	fmt.Printf("Required Approvals Count: %d", REQUIRED_APPROVAL_COUNT)
 	fmt.Println("Title: " + TITLE)
+	fmt.Println("Method: " + METHOD)
+	fmt.Println("Url: " + URL)
+	fmt.Println("Headers: " + HEADERS)
+	fmt.Println("Body: " + BODY)
 	fmt.Println()
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")
@@ -84,6 +96,7 @@ const (
 
 	PULL_REQUESTS_DEADLINE_NEAR = "PULL_REQUESTS_DEADLINE_NEAR"
 	PULL_REQUESTS_DEADLINE      = "PULL_REQUESTS_DEADLINE"
+	RESPONSE_BODY               = "RESPONSE_BODY"
 )
 
 func DumpOutputs() {
@@ -94,4 +107,5 @@ func DumpOutputs() {
 
 	fmt.Printf("Pull Requests Deadline Near: %s\n", os.Getenv(PULL_REQUESTS_DEADLINE_NEAR))
 	fmt.Println("Pull Requests Deadline Info: \n" + os.Getenv(PULL_REQUESTS_DEADLINE))
+	fmt.Println("Response Body: \n" + os.Getenv(RESPONSE_BODY))
 }
