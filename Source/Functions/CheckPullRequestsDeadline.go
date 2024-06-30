@@ -38,20 +38,20 @@ func PerformCheckPullRequestsDeadline() {
 		fmt.Println()
 		fmt.Println("Checking deadline...")
 		fmt.Println("........................................")
-		isDeadLineNear := isDeadLineNear(pullRequests)
-		fmt.Printf("Is deadline near: %t\n", isDeadLineNear)
+		isDeadlinesNear := isDeadlinesNear(pullRequests)
+		fmt.Printf("Is deadlines near: %t\n", isDeadlinesNear)
 
 		fmt.Println()
 		fmt.Println("Preparing output...")
 		fmt.Println("........................................")
-		output := prepareOutput(isDeadLineNear, pullRequests)
+		output := prepareOutput(pullRequests)
 		outputJson := msc.ConvertToJson(output, true)
 		fmt.Println("Output prepared !!")
 
 		fmt.Println()
 		fmt.Println("Exporting Results....")
 		fmt.Println("........................................")
-		os.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(isDeadLineNear))
+		os.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(isDeadlinesNear))
 		os.Setenv(env.PULL_REQUESTS_DEADLINE, outputJson)
 		fmt.Println("Exported !!!")
 	}
@@ -78,21 +78,29 @@ func isFromDesiredAuthor(pullRequest bitbucket.PullRequest) bool {
 	return strings.Contains(env.EMAILS, pullRequest.Author.User.EmailAddress)
 }
 
-func isDeadLineNear(pullRequests []bitbucket.PullRequest) bool {
-	deadLineRegex, _ := regexp.Compile(`[deadline [0-9]+\/[0-9]+]`)
-	dayRegex, _ := regexp.Compile(`[0-9]+\/[0-9]+`)
+func isDeadlinesNear(pullRequests []bitbucket.PullRequest) bool {
 	for index, pullRequest := range pullRequests {
-		title := strings.ToLower(pullRequest.Title)
-		if deadLineRegex.MatchString(title) {
-			dayValues := dayRegex.FindAllString(title, 1)
-			if len(dayValues) > 0 {
-				deadline := fmt.Sprintf("%s/%d", dayValues[0], time.Now().Year())
-				deadlineDate, _ := time.Parse("2/1/2006", deadline)
-				since := time.Since(deadlineDate)
-				fmt.Printf("%d: %s - %s(%f)\n", index, deadlineDate, since, -since.Hours())
-				if -since.Hours() < 24 {
-					return true
-				}
+		fmt.Printf("%d: %s\n", index, pullRequest.Title)
+		if isDeadlineNear(pullRequest) {
+			return true
+		}
+	}
+	return false
+}
+
+func isDeadlineNear(pullRequest bitbucket.PullRequest) bool {
+	deadlineRegex, _ := regexp.Compile(`[deadline [0-9]+\/[0-9]+]`)
+	dayRegex, _ := regexp.Compile(`[0-9]+\/[0-9]+`)
+	title := strings.ToLower(pullRequest.Title)
+	if deadlineRegex.MatchString(title) {
+		dayValues := dayRegex.FindAllString(title, 1)
+		if len(dayValues) > 0 {
+			deadline := fmt.Sprintf("%s/%d", dayValues[0], time.Now().Year())
+			deadlineDate, _ := time.Parse("2/1/2006", deadline)
+			since := time.Since(deadlineDate)
+			fmt.Printf("---> %s - %s(%f)\n", deadlineDate, since, -since.Hours())
+			if -since.Hours() < 24 {
+				return true
 			}
 		}
 	}
@@ -100,23 +108,23 @@ func isDeadLineNear(pullRequests []bitbucket.PullRequest) bool {
 }
 
 type pullRequestsInfo struct {
-	Title string `json:"title"`
-	Url   string `json:"url"`
+	Title          string `json:"title"`
+	Url            string `json:"url"`
+	IsDeadlineNear bool   `json:"isDeadlineNear"`
 }
 
-type pullRequestDeadLinesOutup struct {
-	IsDeadLineNear bool               `json:"isDeadLineNear"`
-	PullRequests   []pullRequestsInfo `json:"pullRequests"`
+type pullRequestsDeadlineOutup struct {
+	PullRequests []pullRequestsInfo `json:"pullRequests"`
 }
 
-func prepareOutput(isDeadLineNear bool, pullRequests []bitbucket.PullRequest) pullRequestDeadLinesOutup {
-	output := pullRequestDeadLinesOutup{}
-	output.IsDeadLineNear = isDeadLineNear
+func prepareOutput(pullRequests []bitbucket.PullRequest) pullRequestsDeadlineOutup {
+	output := pullRequestsDeadlineOutup{}
 	output.PullRequests = []pullRequestsInfo{}
 
 	for _, pullRequest := range pullRequests {
 		info := pullRequestsInfo{}
 		info.Title = pullRequest.Title
+		info.IsDeadlineNear = isDeadlineNear(pullRequest)
 		info.Url = ""
 		if len(pullRequest.Links.Self) > 0 {
 			info.Url = pullRequest.Links.Self[0].HRef

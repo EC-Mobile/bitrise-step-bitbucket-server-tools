@@ -53,7 +53,7 @@ You can use this Json Data and Flag to perform operation e.g Notify Members to p
 
 ```
 {
-    "isDeadLineNear": true,
+    "isDeadlineNear": true,
     "pullRequests": [
         {
             "title": "[Deadline: 1/7][PROJ-12345][BUG][Deep Linking] - Web view 02 page can not be loaded completely.",
