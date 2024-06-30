@@ -107,8 +107,34 @@ inputs:
       is_required: false
       is_sensitive: false
 
+  - emails:
+    opts:
+      category: Function
+      title: List of Emails
+      summary: Emails seperated by ,
+      is_required: false
+      is_sensitive: false
+
+  - required_approval_count: 2
+    opts:
+      category: Function
+      title: Approvals Required
+      summary: Minimum number of approvals required in Pull Request.
+      is_required: false
+      is_sensitive: false
+
 outputs:
   - SKIPPED_VERIFICATION:  
     opts:    
       title: Skipped Verification
       summary: True or False, telling is verfication skipped or not
+
+  - PULL_REQUESTS_DEADLINE_NEAR:  
+    opts:    
+      title: Is Pull Requests Deadline Near
+      summary: True or False, telling is any unapproved pull request deadline is near.
+
+  - PULL_REQUESTS_DEADLINE:  
+    opts:    
+      title: Pull Requests Deadline Details
+      summary: Details of all Open and Unapproved Pull Requests. Check `Read Me` for details.

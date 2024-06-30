@@ -4,6 +4,8 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   - SKIPPED_VERIFICATION: $SKIPPED_VERIFICATION
+  - PULL_REQUESTS_DEADLINE_NEAR: $PULL_REQUESTS_DEADLINE_NEAR
+  - PULL_REQUESTS_DEADLINE: $PULL_REQUESTS_DEADLINE
   - BITRISE_STEP_ID: bitbucket-server-tools
   - BITRISE_STEP_VERSION: "1.0.0"
   - BITRISE_STEP_GIT_CLONE_URL: https://github.com/KageRiyuu/bitrise-step-bitbucket-server-tools.git
