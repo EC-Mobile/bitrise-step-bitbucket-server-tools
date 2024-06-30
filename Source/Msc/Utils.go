@@ -3,6 +3,8 @@ package msc
 import (
 	"encoding/json"
 	"fmt"
+	"regexp"
+	"strings"
 )
 
 func Filter[T any](ss []T, test func(T) bool) (ret []T) {
@@ -32,4 +34,21 @@ func ConvertToJson[T any](data T, pretty bool) string {
 		return string(jsonString)
 	}
 
+}
+
+func Matches(regex string, value string) bool {
+	if len(regex) <= 0 {
+		return true
+	}
+	matchFlag := true
+	splits := strings.Split(regex, " ")
+	if len(splits) >= 2 && splits[0] == "NRR" {
+		matchFlag = false
+		regex = strings.Replace(regex, "NRR ", "", 1)
+	}
+
+	valueRegex, _ := regexp.Compile(regex)
+	matchFound := len(valueRegex.FindAllString(value, 1)) > 0
+
+	return matchFound == matchFlag
 }

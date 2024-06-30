@@ -124,6 +124,14 @@ inputs:
       is_required: false
       is_sensitive: false
 
+  - title:
+    opts:
+      category: Function
+      title: Title
+      summary: Value used for title, check README.md for details.
+      is_required: false
+      is_sensitive: false
+
 outputs:
   - SKIPPED_VERIFICATION:  
     opts:    
@@ -138,4 +146,4 @@ outputs:
   - PULL_REQUESTS_DEADLINE:  
     opts:    
       title: Pull Requests Deadline Details
-      summary: Details of all Open and Unapproved Pull Requests. Check `Read Me` for details.
+      summary: Details of all Open and Unapproved Pull Requests. Check `README.md` for details.

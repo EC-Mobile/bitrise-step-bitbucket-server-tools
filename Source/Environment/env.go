@@ -22,6 +22,7 @@ var (
 	BITRISE_BUILD_SLUG      string
 	EMAILS                  string
 	REQUIRED_APPROVAL_COUNT int
+	TITLE                   string
 )
 
 func LoadEnvironment() {
@@ -46,6 +47,7 @@ func LoadEnvironment() {
 	BITRISE_BUILD_SLUG = os.Getenv("bitrise_build_slug")
 	EMAILS = os.Getenv("emails")
 	REQUIRED_APPROVAL_COUNT, _ = strconv.Atoi(os.Getenv("required_approval_count"))
+	TITLE = os.Getenv("title")
 
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
@@ -71,6 +73,7 @@ func DumpInputs() {
 	fmt.Println("Bitrise Build Slug: " + BITRISE_BUILD_SLUG)
 	fmt.Println("Emails: " + EMAILS)
 	fmt.Printf("Required Approvals Count: %d", REQUIRED_APPROVAL_COUNT)
+	fmt.Println("Title: " + TITLE)
 	fmt.Println()
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")

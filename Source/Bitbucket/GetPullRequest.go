@@ -21,6 +21,7 @@ type Ref struct {
 }
 
 type PullRequest struct {
+	Id        int        `json:id`
 	Title     string     `json:"title"`
 	Open      bool       `json:"open"`
 	Closed    bool       `json:"closed"`

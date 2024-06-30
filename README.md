@@ -44,13 +44,14 @@ You can use this Json Data and Flag to perform operation e.g Notify Members to p
 ## Required Inputs
 - emails:                       List of pull request Authors email you what to check
 - required_approval_count:      Minimum number of approvals required for a Pull Request
+- title:                        Regular expression to filter Pull Request with Title. Check `How To Apply Regex` below.
+- pr_id:                        Regular expression to filter Pull Request with Id. Check `How To Apply Regex` below.
 
 ## Outputs
 - PULL_REQUESTS_DEADLINE_NEAR:      TRUE/FALSE if [Deadline dd/mm] is near 
 - PULL_REQUESTS_DEADLINE:           Json String check `Sample JSON PULL_REQUESTS_DEADLINE`
 
 ### Sample JSON `PULL_REQUESTS_DEADLINE`
-
 ```
 {
     "isDeadlineNear": true,
@@ -66,6 +67,17 @@ You can use this Json Data and Flag to perform operation e.g Notify Members to p
     ]
 }
 ```
+
+# How To Apply Regex
+
+Yoy can check and validate regular expression that can be used in Golang language.
+https://regex101.com
+
+To negate the provided reqular expression add "NRR " in begining of regular expression.
+
+Example:
+String Start with Ryu: "^Ryu"
+String `DOES NOT` Start with Ryu: "NRR ^Ryu"
 
 # How to use this Step
 

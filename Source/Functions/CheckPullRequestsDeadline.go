@@ -28,10 +28,10 @@ func PerformCheckPullRequestsDeadline() {
 
 	if len(pullRequests) > 0 {
 		fmt.Println()
-		fmt.Println("Filtering by, not approved and desired author...")
+		fmt.Println("Filtering by, not approved, title and desired author...")
 		fmt.Println("........................................")
 		pullRequests = msc.Filter(pullRequests, func(pullRequest bitbucket.PullRequest) bool {
-			return !isApproved(pullRequest) && isFromDesiredAuthor(pullRequest)
+			return !isApproved(pullRequest) && isFromDesiredAuthor(pullRequest) && matchesTitle(pullRequest) && matchesId(pullRequest)
 		})
 		printPullRequests(pullRequests)
 
@@ -78,6 +78,16 @@ func isFromDesiredAuthor(pullRequest bitbucket.PullRequest) bool {
 	return strings.Contains(env.EMAILS, pullRequest.Author.User.EmailAddress)
 }
 
+func matchesId(pullRequest bitbucket.PullRequest) bool {
+	id := strconv.Itoa(pullRequest.Id)
+	return msc.Matches(env.PR_ID, id)
+}
+
+func matchesTitle(pullRequest bitbucket.PullRequest) bool {
+	title := strings.ToLower(pullRequest.Title)
+	return msc.Matches(env.TITLE, title)
+}
+
 func isDeadlinesNear(pullRequests []bitbucket.PullRequest) bool {
 	for index, pullRequest := range pullRequests {
 		fmt.Printf("%d: %s\n", index, pullRequest.Title)
@@ -93,7 +103,7 @@ func isDeadlineNear(pullRequest bitbucket.PullRequest) bool {
 	dayRegex, _ := regexp.Compile(`[0-9]+\/[0-9]+`)
 	title := strings.ToLower(pullRequest.Title)
 	if deadlineRegex.MatchString(title) {
-		dayValues := dayRegex.FindAllString(title, 1)
+		dayValues := dayRegex.FindAllString(title, -1)
 		if len(dayValues) > 0 {
 			deadline := fmt.Sprintf("%s/%d", dayValues[0], time.Now().Year())
 			deadlineDate, _ := time.Parse("2/1/2006", deadline)
