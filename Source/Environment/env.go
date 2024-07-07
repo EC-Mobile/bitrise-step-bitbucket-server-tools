@@ -1,7 +1,9 @@
 package env
 
 import (
+	msc "bitbucket-tools/Source/Msc"
 	"fmt"
+	"image/color"
 	"os"
 	"os/exec"
 	"strconv"
@@ -28,6 +30,11 @@ var (
 	URL                     string
 	HEADERS                 string
 	BODY                    string
+
+	BASE_ICONS_SET        string
+	DESTINATION_ICONS_SET string
+	ICON_PRIMARY_COLOR    color.Color
+	ICON_SECONDARY_COLOR  color.Color
 )
 
 func LoadEnvironment() {
@@ -58,6 +65,11 @@ func LoadEnvironment() {
 	HEADERS = os.Getenv("headers")
 	BODY = os.Getenv("body")
 
+	BASE_ICONS_SET = os.Getenv("base_icons_set")
+	DESTINATION_ICONS_SET = os.Getenv("destination_icons_set")
+	ICON_PRIMARY_COLOR, _ = msc.ParseHexColor(os.Getenv("icon_primary_color"))
+	ICON_SECONDARY_COLOR, _ = msc.ParseHexColor(os.Getenv("icon_secondary_color"))
+
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
 }
@@ -87,6 +99,13 @@ func DumpInputs() {
 	fmt.Println("Url: " + URL)
 	fmt.Println("Headers: " + HEADERS)
 	fmt.Println("Body: " + BODY)
+
+	fmt.Println()
+	fmt.Println("Base Icons Set: " + BASE_ICONS_SET)
+	fmt.Println("Destination Icons Set: " + DESTINATION_ICONS_SET)
+	fmt.Printf("Icon Primary Color: %s\n", ICON_PRIMARY_COLOR)
+	fmt.Printf("Icon Secondary Color: %s\n", ICON_SECONDARY_COLOR)
+
 	fmt.Println()
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")
