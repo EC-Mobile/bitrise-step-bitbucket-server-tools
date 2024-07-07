@@ -25,6 +25,7 @@ Function Inputs:
 2. Check Pull Requests Deadline
 3. Call Api
 4. Generate Icons
+5. Terminate Build
 
 # Skip Verification
 This function will check if the PR Title contains "[SV]" tag, it will stop the build on bit rise and add the commit status "FAILED" on the head commit of the PR.
@@ -99,6 +100,17 @@ Generates app icons by adding information on top of base icon. Like Version Numb
 - app_version_number                "2.3.0"
 - app_build_number                  "2309"
 - app_build_type                    "PRODUCTION"
+
+# Terminate Build
+If you want to terminate bitrise build, with or without any condition, you can use this.
+
+## Required Inputs
+- bitrise_app_slug                  6b20b251c724cb4e
+
+## Optional Inputs
+- title                             Regex to match the value
+- body                              Value to be check if Build should terminate or not
+- description                       Message to submit when terminating the given build
 
 # How To Apply Regex
 

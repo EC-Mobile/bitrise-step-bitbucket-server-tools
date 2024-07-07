@@ -20,6 +20,8 @@ func main() {
 		function.PerformApiCall()
 	case function.GENERATE_ICONS:
 		function.PerformGenerateIcons()
+	case function.TERMINATE_BUILD:
+		function.PerformTerminateBuild()
 	default:
 		fmt.Println("Invalid function selected !!")
 	}

@@ -26,6 +26,7 @@ var (
 	EMAILS                  string
 	REQUIRED_APPROVAL_COUNT int
 	TITLE                   string
+	DESCRIPTION             string
 	METHOD                  string
 	URL                     string
 	HEADERS                 string
@@ -68,6 +69,7 @@ func LoadEnvironment() {
 	EMAILS = os.Getenv("emails")
 	REQUIRED_APPROVAL_COUNT, _ = strconv.Atoi(os.Getenv("required_approval_count"))
 	TITLE = os.Getenv("title")
+	DESCRIPTION = os.Getenv("description")
 	METHOD = os.Getenv("method")
 	URL = os.Getenv("url")
 	HEADERS = os.Getenv("headers")

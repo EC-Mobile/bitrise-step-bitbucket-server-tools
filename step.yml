@@ -134,6 +134,14 @@ inputs:
       is_required: false
       is_sensitive: false
 
+  - description:
+    opts:
+      category: Function
+      title: Description
+      summary: Value used for description, check README.md for details.
+      is_required: false
+      is_sensitive: false
+
   - method:
     opts:
       category: Function
