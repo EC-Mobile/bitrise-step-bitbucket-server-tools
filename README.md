@@ -23,6 +23,8 @@ Function Inputs:
 
 1. Skip Verification
 2. Check Pull Requests Deadline
+3. Call Api
+4. Generate Icons
 
 # Skip Verification
 This function will check if the PR Title contains "[SV]" tag, it will stop the build on bit rise and add the commit status "FAILED" on the head commit of the PR.
@@ -69,6 +71,34 @@ You can use this Json Data and Flag to perform operation e.g Notify Members to p
     ]
 }
 ```
+# Call Api
+Calls the respective Rest Api with given data.
+
+## Required Inputs
+- method            GET/POST
+- url               https://.....
+
+## Optional Inputs
+- headers           Accept|application/json; charset=UTF-8 | Key 1 | Value 1 | key 2 | Value 2 ....
+- body              String / JSON String /....
+
+# Generate Icons
+Generates app icons by adding information on top of base icon. Like Version Number, Build Number and Build Type
+
+## Required Inputs
+
+- base_icons_set                    "./BaseIcons/"
+- destination_icons_set             "./NewIcons/"
+- icon_primary_color                "#fa47a0"
+- icon_secondary_color              "#2491FA"
+- icon_label_color                  "#FFF"
+- icon_scaler                       0 or 1 or 2 or 3
+- icon_overlay_resolution           1024
+- icon_overlay_scale                0 - 100
+- icon_overlay_font_size            70
+- app_version_number                "2.3.0"
+- app_build_number                  "2309"
+- app_build_type                    "PRODUCTION"
 
 # How To Apply Regex
 

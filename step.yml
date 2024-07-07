@@ -91,6 +91,7 @@ inputs:
       - "Skip Verification"
       - "Check Pull Requests Deadline"
       - "Call Api"
+      - "Generate Icons"
       - "Clean PR (Not Available)"
 
   - pr_id: $BITRISE_PULL_REQUEST
@@ -166,6 +167,108 @@ inputs:
       category: Function
       title: Body
       summary: String data to be used in function e.g. Api Call
+      is_required: false
+      is_sensitive: false
+
+
+  - base_icons_set: "./"
+    opts:
+      category: Function - Icon Generator
+      title: Base Icons Set
+      summary: Directory to base icons folder. That contains .png files
+      is_required: false
+      is_sensitive: false
+
+  - destination_icons_set: "./"
+    opts:
+      category: Function - Icon Generator
+      title: Destination Icons Set
+      summary: Path to folder where new icons should be saved.
+      is_required: false
+      is_sensitive: false
+
+  - icon_primary_color: "#fa47a0"
+    opts:
+      category: Function - Icon Generator
+      title: Icon Pimary Color
+      summary: Primary color to be used in overlay view
+      is_required: false
+      is_sensitive: false
+
+  - icon_secondary_color: "#2491FA"
+    opts:
+      category: Function - Icon Generator
+      title: Icon Secondary Color
+      summary: Secondary color to be used in overlay view
+      is_required: false
+      is_sensitive: false
+
+  - icon_label_color: "#FFF"
+    opts:
+      category: Function - Icon Generator
+      title: Icon Label Color
+      summary: Label color to be used in overlay view text
+      is_required: false
+      is_sensitive: false
+
+  - icon_scaler: "2"
+    opts:
+      category: Function - Icon Generator
+      title: Icon Scaler
+      summary: Type of scaling method to use while resizing. 0 = (Low Quality but Very Fast), 3 = (Best Quality by Very Slow)
+      is_required: false
+      is_sensitive: false
+      value_options:
+      - "0"
+      - "1"
+      - "2"
+      - "3"
+
+  - icon_overlay_resolution: 1024
+    opts:
+      category: Function - Icon Generator
+      title: Icon Overlay Resolution
+      summary: Resolution of the graphics, on which overlay should be drawn. High=(Crisp but slow) Low=(Anti Crisp but fast)
+      is_required: false
+      is_sensitive: false
+
+  - icon_overlay_scale:
+    opts:
+      category: Function - Icon Generator
+      title: Icon Overlay Scale
+      summary: Size of section inside overlay, its a percentage of total Resolution you provide. 
+      is_required: false
+      is_sensitive: false
+
+  - icon_overlay_font_size:
+    opts:
+      category: Function - Icon Generator
+      title: Icon Overlay Font Size
+      summary: Size of text inside overlay e.g Version Number, Build Number, Build Type etc.
+      is_required: false
+      is_sensitive: false
+
+  - app_version_number:
+    opts:
+      category: Function - Icon Generator
+      title: App Version Number
+      summary: Version Number of the App, you want to add on overlay.
+      is_required: false
+      is_sensitive: false
+
+  - app_build_number:
+    opts:
+      category: Function - Icon Generator
+      title: App Build Number
+      summary: Build Number of the App, you want to add on overlay.
+      is_required: false
+      is_sensitive: false
+
+  - app_build_type:
+    opts:
+      category: Function - Icon Generator
+      title: App Build Type
+      summary: Build Type of the App, you want to add on overlay. e.g PRODUCTION, STAGING, DEVELOPMENT etc.
       is_required: false
       is_sensitive: false
 
