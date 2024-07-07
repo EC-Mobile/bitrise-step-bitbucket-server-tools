@@ -31,10 +31,18 @@ var (
 	HEADERS                 string
 	BODY                    string
 
-	BASE_ICONS_SET        string
-	DESTINATION_ICONS_SET string
-	ICON_PRIMARY_COLOR    color.Color
-	ICON_SECONDARY_COLOR  color.Color
+	BASE_ICONS_SET          string
+	DESTINATION_ICONS_SET   string
+	ICON_PRIMARY_COLOR      color.Color
+	ICON_SECONDARY_COLOR    color.Color
+	ICON_LABEL_COLOR        color.Color
+	ICON_SCALER             int
+	ICON_OVERLAY_RESOLUTION int
+	ICON_OVERLAY_SCALE      int
+	ICON_OVERLAY_FONT_SIZE  int
+	APP_VERSION_NUMBER      string
+	APP_BUILD_NUMBER        string
+	APP_BUILD_TYPE          string
 )
 
 func LoadEnvironment() {
@@ -69,6 +77,14 @@ func LoadEnvironment() {
 	DESTINATION_ICONS_SET = os.Getenv("destination_icons_set")
 	ICON_PRIMARY_COLOR, _ = msc.ParseHexColor(os.Getenv("icon_primary_color"))
 	ICON_SECONDARY_COLOR, _ = msc.ParseHexColor(os.Getenv("icon_secondary_color"))
+	ICON_LABEL_COLOR, _ = msc.ParseHexColor(os.Getenv("icon_label_color"))
+	ICON_SCALER, _ = strconv.Atoi(os.Getenv("icon_scaler"))
+	ICON_OVERLAY_RESOLUTION, _ = strconv.Atoi(os.Getenv("icon_overlay_resolution"))
+	ICON_OVERLAY_SCALE, _ = strconv.Atoi(os.Getenv("icon_overlay_scale"))
+	ICON_OVERLAY_FONT_SIZE, _ = strconv.Atoi(os.Getenv("icon_overlay_font_size"))
+	APP_VERSION_NUMBER = os.Getenv("app_version_number")
+	APP_BUILD_NUMBER = os.Getenv("app_build_number")
+	APP_BUILD_TYPE = os.Getenv("app_build_type")
 
 	DumpInputs()
 	fmt.Println("Loading env finished !!")
@@ -105,6 +121,16 @@ func DumpInputs() {
 	fmt.Println("Destination Icons Set: " + DESTINATION_ICONS_SET)
 	fmt.Printf("Icon Primary Color: %s\n", ICON_PRIMARY_COLOR)
 	fmt.Printf("Icon Secondary Color: %s\n", ICON_SECONDARY_COLOR)
+	fmt.Printf("Icon Label Color: %s\n", ICON_LABEL_COLOR)
+
+	fmt.Printf("Icon Scalar: %d\n", ICON_SCALER)
+	fmt.Printf("Icon Resolution: %d\n", ICON_OVERLAY_RESOLUTION)
+	fmt.Printf("Icon Scale: %d\n", ICON_OVERLAY_SCALE)
+	fmt.Printf("Icon Font Size: %d\n", ICON_OVERLAY_FONT_SIZE)
+
+	fmt.Println("App Version Number: " + APP_VERSION_NUMBER)
+	fmt.Println("App Build Number: " + APP_BUILD_NUMBER)
+	fmt.Println("App Build Type: " + APP_BUILD_TYPE)
 
 	fmt.Println()
 	fmt.Println("-----------------------------------------")

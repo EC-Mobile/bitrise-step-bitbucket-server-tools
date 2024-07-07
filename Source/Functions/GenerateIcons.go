@@ -28,7 +28,23 @@ func PerformGenerateIcons() {
 	fmt.Println()
 	fmt.Println("Generating icon overlay....")
 	fmt.Println("........................................")
-	iconOverlay := createOverlay(image.Rect(0, 0, 1024, 1024), env.ICON_PRIMARY_COLOR, env.ICON_SECONDARY_COLOR)
+	iconOverlay := createOverlay(
+		Overlay{
+			Resolution:     env.ICON_OVERLAY_RESOLUTION,
+			Scale:          env.ICON_OVERLAY_SCALE,
+			PrimaryColor:   env.ICON_PRIMARY_COLOR,
+			SecondaryColor: env.ICON_SECONDARY_COLOR,
+		},
+		Label{
+			Size:  float64(env.ICON_OVERLAY_FONT_SIZE),
+			Color: env.ICON_LABEL_COLOR,
+		},
+		AppInfo{
+			VersionNumber: env.APP_VERSION_NUMBER,
+			BuildNumber:   env.APP_BUILD_NUMBER,
+			BuildType:     env.APP_BUILD_TYPE,
+		},
+	)
 
 	fmt.Println()
 	fmt.Println("Generating final icon....")
@@ -42,7 +58,7 @@ func PerformGenerateIcons() {
 		draw.Draw(icon, icon.Bounds(), &image.Uniform{color.Black}, image.Point{0, 0}, draw.Over)
 		draw.Draw(icon, icon.Bounds(), iconBase, image.Point{0, 0}, draw.Over)
 
-		resizedOverlay := resize(iconOverlay, icon.Rect)
+		resizedOverlay := resize(iconOverlay, icon.Rect, env.ICON_SCALER)
 		draw.Draw(icon, icon.Bounds(), resizedOverlay, image.Point{0, 0}, draw.Over)
 
 		// Saving final icon
@@ -52,7 +68,19 @@ func PerformGenerateIcons() {
 }
 
 type (
-	//Label is a struct
+	AppInfo struct {
+		VersionNumber string
+		BuildNumber   string
+		BuildType     string
+	}
+
+	Overlay struct {
+		Resolution     int
+		Scale          int
+		PrimaryColor   color.Color
+		SecondaryColor color.Color
+	}
+
 	Label struct {
 		Text  string
 		Size  float64
@@ -77,7 +105,7 @@ func addLabel(icon *image.RGBA, label Label) {
 
 	//positioning the label to center
 	centerX := label.Rect.Min.X + label.Rect.Dx()/2
-	centerY := label.Rect.Min.Y + label.Rect.Dy()/2 - int(label.Size)
+	centerY := label.Rect.Min.Y + label.Rect.Dy()/2 - int(label.Size) - 5
 	pt := freetype.Pt(centerX, centerY+int(c.PointToFixed(label.Size)>>6))
 	newPt, _ := c.DrawString(label.Text, pt)
 
@@ -115,18 +143,27 @@ func saveIcon(icon image.Image, path string) error {
 	return nil
 }
 
-func resize(icon image.Image, size image.Rectangle) image.Image {
+// https://stackoverflow.com/questions/22940724/go-resizing-images
+func resize(icon image.Image, size image.Rectangle, scaler int) image.Image {
 	resizedIcon := image.NewRGBA(size)
-	draw.NearestNeighbor.Scale(resizedIcon, resizedIcon.Rect, icon, icon.Bounds(), draw.Over, nil)
+	if scaler == 1 {
+		draw.ApproxBiLinear.Scale(resizedIcon, resizedIcon.Rect, icon, icon.Bounds(), draw.Over, nil)
+	} else if scaler == 2 {
+		draw.BiLinear.Scale(resizedIcon, resizedIcon.Rect, icon, icon.Bounds(), draw.Over, nil)
+	} else if scaler == 3 {
+		draw.CatmullRom.Scale(resizedIcon, resizedIcon.Rect, icon, icon.Bounds(), draw.Over, nil)
+	} else {
+		draw.NearestNeighbor.Scale(resizedIcon, resizedIcon.Rect, icon, icon.Bounds(), draw.Over, nil)
+	}
 	return resizedIcon
 }
 
-func createOverlay(rect image.Rectangle, primaryColor, secondaryColor color.Color) image.Image {
-	// Overlay to be added on base icon
+func createOverlay(oc Overlay, lc Label, ai AppInfo) image.Image {
+	rect := image.Rect(0, 0, oc.Resolution, oc.Resolution)
 	iconOverlay := image.NewRGBA(rect)
 
 	zp := image.Point{}
-	sectionHeight := rect.Dy() / 100 * 12
+	sectionHeight := rect.Dy() / 100 * oc.Scale
 	sideGap := rect.Dx() / 100 * 20 / 2
 	center := iconOverlay.Bounds().Dx() / 2
 
@@ -134,13 +171,13 @@ func createOverlay(rect image.Rectangle, primaryColor, secondaryColor color.Colo
 	buildRect := image.Rect(center, 0, iconOverlay.Rect.Dx()-sideGap, sectionHeight)
 	titleRect := image.Rect(0, iconOverlay.Rect.Dy()-sectionHeight, iconOverlay.Rect.Dx(), iconOverlay.Rect.Dy())
 
-	draw.Draw(iconOverlay, versionRect, &image.Uniform{primaryColor}, zp, draw.Over)
-	draw.Draw(iconOverlay, buildRect, &image.Uniform{secondaryColor}, zp, draw.Over)
-	draw.Draw(iconOverlay, titleRect, &image.Uniform{primaryColor}, zp, draw.Over)
+	draw.Draw(iconOverlay, versionRect, &image.Uniform{oc.PrimaryColor}, zp, draw.Over)
+	draw.Draw(iconOverlay, buildRect, &image.Uniform{oc.SecondaryColor}, zp, draw.Over)
+	draw.Draw(iconOverlay, titleRect, &image.Uniform{oc.PrimaryColor}, zp, draw.Over)
 
-	addLabel(iconOverlay, Label{Text: "3.4.0", Color: color.White, Size: 60, Rect: versionRect})
-	addLabel(iconOverlay, Label{Text: "3890", Color: color.White, Size: 60, Rect: buildRect})
-	addLabel(iconOverlay, Label{Text: "Production", Color: color.White, Size: 60, Rect: titleRect})
+	addLabel(iconOverlay, Label{Text: ai.VersionNumber, Color: lc.Color, Size: lc.Size, Rect: versionRect})
+	addLabel(iconOverlay, Label{Text: ai.BuildNumber, Color: lc.Color, Size: lc.Size, Rect: buildRect})
+	addLabel(iconOverlay, Label{Text: ai.BuildType, Color: lc.Color, Size: lc.Size, Rect: titleRect})
 	return iconOverlay
 }
 
