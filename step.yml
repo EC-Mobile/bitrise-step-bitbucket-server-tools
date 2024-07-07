@@ -92,6 +92,7 @@ inputs:
       - "Check Pull Requests Deadline"
       - "Call Api"
       - "Generate Icons"
+      - "Terminate Build"
       - "Clean PR (Not Available)"
 
   - pr_id: $BITRISE_PULL_REQUEST
