@@ -93,48 +93,49 @@ func LoadEnvironment() {
 }
 
 func DumpInputs() {
+
+	values := map[string]string{}
+	values["Bitbucket Token Provided:"] = strconv.FormatBool(len(BITBUCKET_API_ACCESS_TOKEN) != 0)
+	values["Bitbucket Base Url:"] = BITBUCKET_DOMAIN
+	values["ucket Project Key:"] = BITBUCKET_PROJECT_KEY
+	values["Bitbucket Repo Slug:"] = BITBUCKET_REPO_SLUG
+
+	values["Bitrise Token Provided:"] = strconv.FormatBool(len(BITRISE_API_ACCESS_TOKEN) != 0)
+	values["Bitrise App Slug:"] = BITRISE_APP_SLUG
+
+	values["Selected Function:"] = FUNCTION
+	values["Pull Request Id:"] = PR_ID
+	values["Bitrise Build Slug:"] = BITRISE_BUILD_SLUG
+	values["Emails:"] = EMAILS
+	values["Required Approvals Count:"] = strconv.Itoa(REQUIRED_APPROVAL_COUNT)
+	values["Title:"] = TITLE
+	values["Description:"] = DESCRIPTION
+	values["Method:"] = METHOD
+	values["URL:"] = URL
+	values["Headers:"] = HEADERS
+	values["Body:"] = BODY
+
+	values["Base Icons Set:"] = BASE_ICONS_SET
+	values["Destination Icons Set:"] = DESTINATION_ICONS_SET
+	// values["Icon Primary Color:"] = ICON_PRIMARY_COLOR
+	// values["Icon Secondary Color:"] = ICON_SECONDARY_COLOR
+	// values["Icon Label Color:"] = ICON_LABEL_COLOR
+	values["Icon Scalar:"] = strconv.Itoa(ICON_SCALER)
+	values["Icon Resolution:"] = strconv.Itoa(ICON_OVERLAY_RESOLUTION)
+	values["Icon Scale:"] = strconv.Itoa(ICON_OVERLAY_SCALE)
+	values["Icon Font Size:"] = strconv.Itoa(ICON_OVERLAY_FONT_SIZE)
+
+	values["App Version Number:"] = APP_VERSION_NUMBER
+	values["App Build Number:"] = APP_BUILD_NUMBER
+	values["App Build Type:"] = APP_BUILD_TYPE
+
 	fmt.Println("-----------------------------------------")
 	fmt.Println("Inputs: ")
-	fmt.Println("Bitbucket Base Url: " + BITBUCKET_DOMAIN)
-	fmt.Println("Bitbucket Project Key: " + BITBUCKET_PROJECT_KEY)
-	fmt.Println("Bitbucket Repo Slug: " + BITBUCKET_REPO_SLUG)
-	fmt.Printf("Bitbucket Token Provided: %t", len(BITBUCKET_API_ACCESS_TOKEN) != 0)
-	fmt.Println()
-	fmt.Println()
-
-	fmt.Println("Bitrise App Slug: " + BITRISE_APP_SLUG)
-	fmt.Printf("Bitrise Token Provided: %t", len(BITRISE_API_ACCESS_TOKEN) != 0)
-	fmt.Println()
-	fmt.Println()
-
-	fmt.Println("Selected Function: " + FUNCTION)
-	fmt.Println("Pull Request Id: " + PR_ID)
-	fmt.Println("Bitrise Build Slug: " + BITRISE_BUILD_SLUG)
-	fmt.Println("Emails: " + EMAILS)
-	fmt.Printf("Required Approvals Count: %d\n", REQUIRED_APPROVAL_COUNT)
-	fmt.Println("Title: " + TITLE)
-	fmt.Println("Method: " + METHOD)
-	fmt.Println("Url: " + URL)
-	fmt.Println("Headers: " + HEADERS)
-	fmt.Println("Body: " + BODY)
-
-	fmt.Println()
-	fmt.Println("Base Icons Set: " + BASE_ICONS_SET)
-	fmt.Println("Destination Icons Set: " + DESTINATION_ICONS_SET)
-	fmt.Printf("Icon Primary Color: %s\n", ICON_PRIMARY_COLOR)
-	fmt.Printf("Icon Secondary Color: %s\n", ICON_SECONDARY_COLOR)
-	fmt.Printf("Icon Label Color: %s\n", ICON_LABEL_COLOR)
-
-	fmt.Printf("Icon Scalar: %d\n", ICON_SCALER)
-	fmt.Printf("Icon Resolution: %d\n", ICON_OVERLAY_RESOLUTION)
-	fmt.Printf("Icon Scale: %d\n", ICON_OVERLAY_SCALE)
-	fmt.Printf("Icon Font Size: %d\n", ICON_OVERLAY_FONT_SIZE)
-
-	fmt.Println("App Version Number: " + APP_VERSION_NUMBER)
-	fmt.Println("App Build Number: " + APP_BUILD_NUMBER)
-	fmt.Println("App Build Type: " + APP_BUILD_TYPE)
-
-	fmt.Println()
+	for title, value := range values {
+		if len(value) > 0 {
+			fmt.Println(title + " " + value)
+		}
+	}
 	fmt.Println("-----------------------------------------")
 	fmt.Println("")
 }
@@ -148,14 +149,21 @@ const (
 )
 
 func DumpOutputs() {
-	fmt.Println()
-	fmt.Println("........................................")
-	fmt.Println("Outputs: ")
-	fmt.Println("Verification Skipped: " + os.Getenv(SKIPPED_VERIFICATION))
+	values := map[string]string{}
+	values["Verification Skipped:"] = os.Getenv(SKIPPED_VERIFICATION)
+	values["Pull Requests Deadline Near:"] = os.Getenv(PULL_REQUESTS_DEADLINE_NEAR)
+	values["Pull Requests Deadline Info:"] = os.Getenv(PULL_REQUESTS_DEADLINE)
+	values["Response Body:"] = os.Getenv(RESPONSE_BODY)
 
-	fmt.Printf("Pull Requests Deadline Near: %s\n", os.Getenv(PULL_REQUESTS_DEADLINE_NEAR))
-	fmt.Println("Pull Requests Deadline Info: \n" + os.Getenv(PULL_REQUESTS_DEADLINE))
-	fmt.Println("Response Body: \n" + os.Getenv(RESPONSE_BODY))
+	fmt.Println("-----------------------------------------")
+	fmt.Println("Outputs: ")
+	for title, value := range values {
+		if len(value) > 0 {
+			fmt.Println(title + " " + value)
+		}
+	}
+	fmt.Println("-----------------------------------------")
+	fmt.Println("")
 }
 
 func Setenv(key string, value string) {
