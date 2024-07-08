@@ -111,7 +111,7 @@ func DumpInputs() {
 	fmt.Println("Pull Request Id: " + PR_ID)
 	fmt.Println("Bitrise Build Slug: " + BITRISE_BUILD_SLUG)
 	fmt.Println("Emails: " + EMAILS)
-	fmt.Printf("Required Approvals Count: %d", REQUIRED_APPROVAL_COUNT)
+	fmt.Printf("Required Approvals Count: %d\n", REQUIRED_APPROVAL_COUNT)
 	fmt.Println("Title: " + TITLE)
 	fmt.Println("Method: " + METHOD)
 	fmt.Println("Url: " + URL)
