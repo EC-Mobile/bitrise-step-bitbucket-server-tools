@@ -34,7 +34,7 @@ inputs:
 
   - bitbucket_api_access_token:
     opts:
-      category: Bitbucket
+      category: Bitbucket Auth
       title: Bitbucket Access Token
       summary: Token to access you bitbucket account
       is_required: true
@@ -42,7 +42,7 @@ inputs:
 
   - bitbucket_domain:
     opts:
-      category: Bitbucket
+      category: Bitbucket Auth
       title: Bitbucket Server Domain Name 
       summary: Your Bitbucket server url
       is_required: true
@@ -50,7 +50,7 @@ inputs:
 
   - bitbucket_project_key:
     opts:
-      category: Bitbucket
+      category: Bitbucket Auth
       title: Bitbucket Project Key
       summary: Key of your Project in Bitbucket
       is_required: true
@@ -58,7 +58,7 @@ inputs:
 
   - bitbucket_repo_slug:
     opts:
-      category: Bitbucket
+      category: Bitbucket Auth
       title: Bitbucket Repo Slug
       summary: Id of the repository in Bitbucket
       is_required: true
@@ -66,7 +66,7 @@ inputs:
 
   - bitrise_api_access_token:
     opts:
-      category: Bitrise
+      category: Bitrise Auth
       title: Bitrise Access Token
       summary: Auth token needed to call Bitrise Apis
       is_required: true
@@ -74,15 +74,14 @@ inputs:
 
   - bitrise_app_slug: $BITRISE_APP_SLUG
     opts:
-      category: Bitrise
+      category: Bitrise Auth
       title: Bitrise App Slug
       summary: Id of the app in Bitrise
       is_required: true
       is_sensitive: false
 
-  - function: "Skip Verification"
+  - selected_function: "Skip Verification"
     opts:
-      category: Function
       title: Function
       summary: Function you want to perform
       is_required: true
@@ -95,57 +94,57 @@ inputs:
       - "Terminate Build"
       - "Clean PR (Not Available)"
 
-  - pr_id: $BITRISE_PULL_REQUEST
+  - sv_pr_id: $BITRISE_PULL_REQUEST
     opts:
-      category: Function
+      category: Skip Verification
       title: Pull Request Id
       summary: Id of the Pull Request
       is_required: false
       is_sensitive: false
 
-  - bitrise_build_slug: $BITRISE_BUILD_SLUG
+  - sv_bitrise_build_slug: $BITRISE_BUILD_SLUG
     opts:
-      category: Function
+      category: Skip Verification
       title: Bitrise Build Slug
       summary: Id of the Build in Bitbucket
       is_required: false
       is_sensitive: false
 
-  - emails:
+  - cprd_pr_id: $BITRISE_PULL_REQUEST
     opts:
-      category: Function
-      title: List of Emails
-      summary: Emails seperated by ,
+      category: Check Pull Requests Deadline
+      title: Pull Request Id
+      summary: Filter by Pull Request Id
       is_required: false
       is_sensitive: false
 
-  - required_approval_count: 2
+  - cprd_author_emails:
     opts:
-      category: Function
+      category: Check Pull Requests Deadline
+      title: Author Emails
+      summary: List of Emails seperated by ,
+      is_required: false
+      is_sensitive: false
+
+  - cprd_required_approval_count: 2
+    opts:
+      category: Check Pull Requests Deadline
       title: Approvals Required
       summary: Minimum number of approvals required in Pull Request.
       is_required: false
       is_sensitive: false
 
-  - title:
+  - cprd_title:
     opts:
-      category: Function
+      category: Check Pull Requests Deadline
       title: Title
-      summary: Value used for title, check README.md for details.
+      summary: Filter PR by title using Regex
       is_required: false
       is_sensitive: false
 
-  - description:
+  - ca_method: "GET"
     opts:
-      category: Function
-      title: Description
-      summary: Value used for description, check README.md for details.
-      is_required: false
-      is_sensitive: false
-
-  - method:
-    opts:
-      category: Function
+      category: Call Api
       title: Http Method
       summary: One of the HTTP call method
       is_required: false
@@ -154,75 +153,75 @@ inputs:
       - "GET"
       - "POST"
 
-  - url:
+  - ca_url:
     opts:
-      category: Function
+      category: Call Api
       title: URL
       summary: HTTP link to resouce.
       is_required: false
       is_sensitive: false
 
-  - headers:
+  - ca_headers:
     opts:
-      category: Function
+      category: Call Api
       title: Headers
       summary: list of Key/Value pair.
       description: e.g Key 1|Value 1|Key 2|Value 2|.....
       is_required: false
       is_sensitive: false
 
-  - body:
+  - ca_body:
     opts:
-      category: Function
+      category: Call Api
       title: Body
       summary: String data to be used in function e.g. Api Call
       is_required: false
       is_sensitive: false
 
 
-  - base_icons_set: "./"
+  - gi_base_icons_set: "./"
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Base Icons Set
       summary: Directory to base icons folder. That contains .png files
       is_required: false
       is_sensitive: false
 
-  - destination_icons_set: "./"
+  - gi_destination_icons_set: "./"
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Destination Icons Set
       summary: Path to folder where new icons should be saved.
       is_required: false
       is_sensitive: false
 
-  - icon_primary_color: "#fa47a0"
+  - gi_icon_primary_color: "#fa47a0"
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Pimary Color
       summary: Primary color to be used in overlay view
       is_required: false
       is_sensitive: false
 
-  - icon_secondary_color: "#2491FA"
+  - gi_icon_secondary_color: "#2491FA"
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Secondary Color
       summary: Secondary color to be used in overlay view
       is_required: false
       is_sensitive: false
 
-  - icon_label_color: "#FFF"
+  - gi_icon_label_color: "#FFF"
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Label Color
       summary: Label color to be used in overlay view text
       is_required: false
       is_sensitive: false
 
-  - icon_scaler: "2"
+  - gi_icon_scaler: "2"
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Scaler
       summary: Type of scaling method to use while resizing. 0 = (Low Quality but Very Fast), 3 = (Best Quality by Very Slow)
       is_required: false
@@ -233,71 +232,71 @@ inputs:
       - "2"
       - "3"
 
-  - icon_overlay_resolution: 1024
+  - gi_icon_overlay_resolution: 1024
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Overlay Resolution
       summary: Resolution of the graphics, on which overlay should be drawn. High=(Crisp but slow) Low=(Anti Crisp but fast)
       is_required: false
       is_sensitive: false
 
-  - icon_overlay_scale:
+  - gi_icon_overlay_scale: 18
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Overlay Scale
       summary: Size of section inside overlay, its a percentage of total Resolution you provide. 
       is_required: false
       is_sensitive: false
 
-  - icon_overlay_font_size:
+  - gi_icon_overlay_font_size: 70
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: Icon Overlay Font Size
       summary: Size of text inside overlay e.g Version Number, Build Number, Build Type etc.
       is_required: false
       is_sensitive: false
 
-  - app_version_number:
+  - gi_app_version_number:
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: App Version Number
       summary: Version Number of the App, you want to add on overlay.
       is_required: false
       is_sensitive: false
 
-  - app_build_number:
+  - gi_app_build_number:
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: App Build Number
       summary: Build Number of the App, you want to add on overlay.
       is_required: false
       is_sensitive: false
 
-  - app_build_type:
+  - gi_app_build_type:
     opts:
-      category: Function - Icon Generator
+      category: Generate Icons
       title: App Build Type
       summary: Build Type of the App, you want to add on overlay. e.g PRODUCTION, STAGING, DEVELOPMENT etc.
       is_required: false
       is_sensitive: false
 
 outputs:
-  - SKIPPED_VERIFICATION:  
+  - SV_SKIPPED_VERIFICATION:  
     opts:    
       title: Skipped Verification
       summary: True or False, telling is verfication skipped or not
 
-  - PULL_REQUESTS_DEADLINE_NEAR:  
+  - CPRD_PULL_REQUESTS_DEADLINE_NEAR:  
     opts:    
       title: Is Pull Requests Deadline Near
       summary: True or False, telling is any unapproved pull request deadline is near.
 
-  - PULL_REQUESTS_DEADLINE:  
+  - CPRD_PULL_REQUESTS_DEADLINE:  
     opts:    
       title: Pull Requests Deadline Details
       summary: Details of all Open and Unapproved Pull Requests. Check `README.md` for details.
   
-  - RESPONSE_BODY: 
+  - CA_RESPONSE_BODY: 
     opts:    
       title: Response Body
       summary: Response sent by the server.

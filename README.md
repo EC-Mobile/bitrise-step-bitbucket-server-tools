@@ -27,17 +27,17 @@ Function Inputs:
 4. Generate Icons
 5. Terminate Build
 
-# Skip Verification
+# 1. Skip Verification
 This function will check if the PR Title contains "[SV]" tag, it will stop the build on bit rise and add the commit status "FAILED" on the head commit of the PR.
 
 ## Required Inputs
-- pr_id:                    Bitbucket PR id, e.g: $BITRISE_PULL_REQUEST.
-- bitrise_build_slug:       Build id on bitrise, e.g: $BITRISE_BUILD_SLUG
+- sv_pr_id:                    Bitbucket PR id, e.g: $BITRISE_PULL_REQUEST.
+- sv_bitrise_build_slug:       Build id on bitrise, e.g: $BITRISE_BUILD_SLUG
 
 ## Outputs
-- SKIPPED_VERIFICATION:        True if found [SV] tag and aborted build, otherwise False.
+- SV_SKIPPED_VERIFICATION:        True if found [SV] tag and aborted build, otherwise False.
 
-# Check Pull Requests Deadline
+# 2. Check Pull Requests Deadline
 This function will check all unapporved open Pull Requests and prepare a Json data `PULL_REQUESTS_DEADLINE`. It also checks tag [Deadline dd/mm] in Pull Request title and create a boolean flag `PULL_REQUESTS_DEADLINE_NEAR`. 
 
 Pull Request title example:
@@ -45,14 +45,14 @@ Pull Request title example:
 You can use this Json Data and Flag to perform operation e.g Notify Members to prioritise tasks accordingly.
 
 ## Required Inputs
-- emails:                       List of pull request Authors email you what to check
-- required_approval_count:      Minimum number of approvals required for a Pull Request
-- title:                        Regular expression to filter Pull Request with Title. Check `How To Apply Regex` below.
-- pr_id:                        Regular expression to filter Pull Request with Id. Check `How To Apply Regex` below.
+- cprd_pr_id:                        Regular expression to filter Pull Request with Id. Check `How To Apply Regex` below.
+- cprd_author_emails:                       List of pull request Authors email you what to check
+- cprd_required_approval_count:      Minimum number of approvals required for a Pull Request
+- cprd_title:                        Regular expression to filter Pull Request with Title. Check `How To Apply Regex` below.
 
 ## Outputs
-- PULL_REQUESTS_DEADLINE_NEAR:      TRUE/FALSE if [Deadline dd/mm] is near 
-- PULL_REQUESTS_DEADLINE:           Json String check `Sample JSON PULL_REQUESTS_DEADLINE`
+- CPRD_PULL_REQUESTS_DEADLINE_NEAR:      TRUE/FALSE if [Deadline dd/mm] is near 
+- CPRD_PULL_REQUESTS_DEADLINE:           Json String check `Sample JSON PULL_REQUESTS_DEADLINE`
 
 ### Sample JSON `PULL_REQUESTS_DEADLINE`
 ```
@@ -72,45 +72,48 @@ You can use this Json Data and Flag to perform operation e.g Notify Members to p
     ]
 }
 ```
-# Call Api
+# 3. Call Api
 Calls the respective Rest Api with given data.
 
 ## Required Inputs
-- method            GET/POST
-- url               https://.....
+- ca_method            GET/POST
+- ca_url               https://.....
 
 ## Optional Inputs
-- headers           Accept|application/json; charset=UTF-8 | Key 1 | Value 1 | key 2 | Value 2 ....
-- body              String / JSON String /....
+- ca_headers           Accept|application/json; charset=UTF-8 | Key 1 | Value 1 | key 2 | Value 2 ....
+- ca_body              String / JSON String /....
+
+## Outputs
+- CA_RESPONSE_BODY      Text form of response body
 
 # Generate Icons
 Generates app icons by adding information on top of base icon. Like Version Number, Build Number and Build Type
 
 ## Required Inputs
 
-- base_icons_set                    "./BaseIcons/"
-- destination_icons_set             "./NewIcons/"
-- icon_primary_color                "#fa47a0"
-- icon_secondary_color              "#2491FA"
-- icon_label_color                  "#FFF"
-- icon_scaler                       0 or 1 or 2 or 3
-- icon_overlay_resolution           1024
-- icon_overlay_scale                0 - 100
-- icon_overlay_font_size            70
-- app_version_number                "2.3.0"
-- app_build_number                  "2309"
-- app_build_type                    "PRODUCTION"
+- gi_base_icons_set                    "./BaseIcons/"
+- gi_destination_icons_set             "./NewIcons/"
+- gi_icon_primary_color                "#fa47a0"
+- gi_icon_secondary_color              "#2491FA"
+- gi_icon_label_color                  "#FFF"
+- gi_icon_scaler                       0 or 1 or 2 or 3
+- gi_icon_overlay_resolution           1024
+- gi_icon_overlay_scale                0 - 100
+- gi_icon_overlay_font_size            70
+- gi_app_version_number                "2.3.0"
+- gi_app_build_number                  "2309"
+- gi_app_build_type                    "PRODUCTION"
 
 # Terminate Build
 If you want to terminate bitrise build, with or without any condition, you can use this.
 
 ## Required Inputs
-- bitrise_app_slug                  6b20b251c724cb4e
+- tb_bitrise_build_slug:                Build id on bitrise, e.g: $BITRISE_BUILD_SLUG
 
 ## Optional Inputs
-- title                             Regex to match the value
-- body                              Value to be check if Build should terminate or not
-- description                       Message to submit when terminating the given build
+- tb_regex                             Regex to match the value
+- tb_value                             Value to be check if Build should terminate or not
+- tb_reason                            reason to submit when terminating the given build
 
 # How To Apply Regex
 

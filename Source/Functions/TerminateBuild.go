@@ -13,9 +13,9 @@ func PerformTerminateBuild() {
 	fmt.Println("Checking Pre-Conditions....")
 	fmt.Println("........................................")
 	shouldTerminate := true
-	if len(env.BODY) > 0 && len(env.TITLE) > 0 {
-		regex, _ := regexp.Compile(env.TITLE)
-		shouldTerminate = len(regex.FindAllString(env.BODY, 1)) > 0
+	if len(env.TB_VALUE) > 0 && len(env.TB_REGEX) > 0 {
+		regex, _ := regexp.Compile(env.TB_REGEX)
+		shouldTerminate = len(regex.FindAllString(env.TB_VALUE, 1)) > 0
 	}
 	fmt.Printf("Should terminate: %t\n", shouldTerminate)
 
@@ -23,7 +23,7 @@ func PerformTerminateBuild() {
 		fmt.Println()
 		fmt.Println("Aborting Bitrise Build....")
 		fmt.Println("........................................")
-		buildAborted := bitrise.AbortBuild(env.BITRISE_BUILD_SLUG, env.DESCRIPTION, true, true)
+		buildAborted := bitrise.AbortBuild(env.TB_BITRISE_BUILD_SLUG, env.TB_REASON, true, true)
 		fmt.Printf("Build aborted: %t", buildAborted)
 		fmt.Println()
 	}

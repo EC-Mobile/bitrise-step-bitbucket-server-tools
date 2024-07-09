@@ -18,6 +18,6 @@ func GetBuildsUrl() string {
 	return GetAppUrl() + "/builds/"
 }
 
-func GetBuildUrl() string {
-	return "https://app.bitrise.io/build/" + env.BITRISE_BUILD_SLUG
+func GetBuildUrl(buildSlug string) string {
+	return "https://app.bitrise.io/build/" + buildSlug
 }

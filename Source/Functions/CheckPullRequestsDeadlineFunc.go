@@ -15,8 +15,8 @@ func PerformCheckPullRequestsDeadline() {
 	fmt.Println()
 	fmt.Println("Reseting Export Values....")
 	fmt.Println("........................................")
-	env.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(false))
-	env.Setenv(env.PULL_REQUESTS_DEADLINE, "")
+	env.Setenv(env.CPRD_PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(false))
+	env.Setenv(env.CPRD_PULL_REQUESTS_DEADLINE, "")
 
 	fmt.Println()
 	fmt.Println("Fetching all Open PRs info....")
@@ -50,8 +50,8 @@ func PerformCheckPullRequestsDeadline() {
 		fmt.Println()
 		fmt.Println("Exporting Results....")
 		fmt.Println("........................................")
-		env.Setenv(env.PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(isDeadlinesNear))
-		env.Setenv(env.PULL_REQUESTS_DEADLINE, outputJson)
+		env.Setenv(env.CPRD_PULL_REQUESTS_DEADLINE_NEAR, strconv.FormatBool(isDeadlinesNear))
+		env.Setenv(env.CPRD_PULL_REQUESTS_DEADLINE, outputJson)
 		fmt.Println("Exported !!!")
 	}
 }
@@ -70,21 +70,21 @@ func isApproved(pullRequest bitbucket.PullRequest) bool {
 			approvalCount++
 		}
 	}
-	return approvalCount >= env.REQUIRED_APPROVAL_COUNT
+	return approvalCount >= env.CPRD_REQUIRED_APPROVAL_COUNT
 }
 
 func isFromDesiredAuthor(pullRequest bitbucket.PullRequest) bool {
-	return strings.Contains(env.EMAILS, pullRequest.Author.User.EmailAddress)
+	return strings.Contains(env.CPRD_AUTHOR_EMAILS, pullRequest.Author.User.EmailAddress)
 }
 
 func matchesId(pullRequest bitbucket.PullRequest) bool {
 	id := strconv.Itoa(pullRequest.Id)
-	return msc.Matches(env.PR_ID, id)
+	return msc.Matches(env.CPRD_PR_ID, id)
 }
 
 func matchesTitle(pullRequest bitbucket.PullRequest) bool {
 	title := strings.ToLower(pullRequest.Title)
-	return msc.Matches(env.TITLE, title)
+	return msc.Matches(env.CPRD_TITLE, title)
 }
 
 func isDeadlinesNear(pullRequests []bitbucket.PullRequest) bool {

@@ -2,33 +2,45 @@ package main
 
 import (
 	env "bitbucket-tools/Source/Environment"
+	functionname "bitbucket-tools/Source/FunctionNames"
 	function "bitbucket-tools/Source/Functions"
 	"fmt"
 )
 
 func main() {
-	env.LoadEnvironment()
-
-	fmt.Println("Applying Function....")
+	fmt.Println()
+	fmt.Println("Loading env variables...")
 	println("-----------------------------------------")
-	switch env.FUNCTION {
-	case function.SKIP_VERIFICATION:
+	env.LoadEnvironment()
+	env.DumpInputs()
+	println("-----------------------------------------")
+	fmt.Println("Loading env finished !!")
+
+	fmt.Println()
+	fmt.Println("Applying function....")
+	println("-----------------------------------------")
+	switch env.SELECTED_FUNCTION {
+	case functionname.SKIP_VERIFICATION:
 		function.PerformSkipVerification()
-	case function.CHECK_PULL_REQUESTS_DEADLINE:
+	case functionname.CHECK_PULL_REQUESTS_DEADLINE:
 		function.PerformCheckPullRequestsDeadline()
-	case function.CALL_API:
+	case functionname.CALL_API:
 		function.PerformApiCall()
-	case function.GENERATE_ICONS:
+	case functionname.GENERATE_ICONS:
 		function.PerformGenerateIcons()
-	case function.TERMINATE_BUILD:
+	case functionname.TERMINATE_BUILD:
 		function.PerformTerminateBuild()
 	default:
 		fmt.Println("Invalid function selected !!")
 	}
+	fmt.Println("-----------------------------------------")
+	fmt.Println("Function completed !!")
+
+	fmt.Println()
+	fmt.Println("Outputs:")
+	fmt.Println("-----------------------------------------")
 	env.DumpOutputs()
 	println("-----------------------------------------")
 
-	fmt.Println()
-	fmt.Println("Function is completed !")
 	fmt.Println("Tools signing off :)")
 }

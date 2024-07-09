@@ -11,15 +11,15 @@ func PerformApiCall() {
 	fmt.Println()
 	fmt.Println("Reseting Export Values....")
 	fmt.Println("........................................")
-	env.Setenv(env.RESPONSE_BODY, "")
+	env.Setenv(env.CA_RESPONSE_BODY, "")
 
 	fmt.Println()
 	fmt.Println("Preparing headers....")
-	headers := prepareHeaders(env.HEADERS)
+	headers := prepareHeaders(env.CA_HEADERS)
 
 	fmt.Println("Calling Api....")
 	fmt.Println("........................................")
-	success, data := network.CallApi(env.METHOD, env.URL, headers, env.BODY)
+	success, data := network.CallApi(env.CA_METHOD, env.CA_URL, headers, env.CA_BODY)
 	fmt.Printf("Api Success: %t\n", success)
 	response := ""
 	if success {
@@ -31,7 +31,7 @@ func PerformApiCall() {
 	fmt.Println()
 	fmt.Println("Exporting Results....")
 	fmt.Println("........................................")
-	env.Setenv(env.RESPONSE_BODY, response)
+	env.Setenv(env.CA_RESPONSE_BODY, response)
 	fmt.Println("Exported !!!")
 }
 

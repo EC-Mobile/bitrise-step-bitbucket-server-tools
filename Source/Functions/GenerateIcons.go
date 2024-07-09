@@ -19,7 +19,7 @@ func PerformGenerateIcons() {
 	fmt.Println("Fetching Base Files....")
 	fmt.Println("........................................")
 	fileFilterRegex := "(.png|.jpg)$"
-	baseIconsFile := getFiles(env.BASE_ICONS_SET, &fileFilterRegex)
+	baseIconsFile := getFiles(env.GI_BASE_ICONS_SET, &fileFilterRegex)
 	fmt.Println("Loaded icons are:")
 	for index, iconFile := range baseIconsFile {
 		fmt.Printf("%d: %s\n", index, iconFile.Name())
@@ -30,19 +30,19 @@ func PerformGenerateIcons() {
 	fmt.Println("........................................")
 	iconOverlay := createOverlay(
 		Overlay{
-			Resolution:     env.ICON_OVERLAY_RESOLUTION,
-			Scale:          env.ICON_OVERLAY_SCALE,
-			PrimaryColor:   env.ICON_PRIMARY_COLOR,
-			SecondaryColor: env.ICON_SECONDARY_COLOR,
+			Resolution:     env.GI_ICON_OVERLAY_RESOLUTION,
+			Scale:          env.GI_ICON_OVERLAY_SCALE,
+			PrimaryColor:   env.GI_ICON_PRIMARY_COLOR,
+			SecondaryColor: env.GI_ICON_SECONDARY_COLOR,
 		},
 		Label{
-			Size:  float64(env.ICON_OVERLAY_FONT_SIZE),
-			Color: env.ICON_LABEL_COLOR,
+			Size:  float64(env.GI_ICON_OVERLAY_FONT_SIZE),
+			Color: env.GI_ICON_LABEL_COLOR,
 		},
 		AppInfo{
-			VersionNumber: env.APP_VERSION_NUMBER,
-			BuildNumber:   env.APP_BUILD_NUMBER,
-			BuildType:     env.APP_BUILD_TYPE,
+			VersionNumber: env.GI_APP_VERSION_NUMBER,
+			BuildNumber:   env.GI_APP_BUILD_NUMBER,
+			BuildType:     env.GI_APP_BUILD_TYPE,
 		},
 	)
 
@@ -51,18 +51,18 @@ func PerformGenerateIcons() {
 	fmt.Println("........................................")
 	for index, iconFile := range baseIconsFile {
 		fmt.Printf("Generating icon for base %d: %s\n", index, iconFile.Name())
-		iconBase, _ := openIcon(env.BASE_ICONS_SET + iconFile.Name())
+		iconBase, _ := openIcon(env.GI_BASE_ICONS_SET + iconFile.Name())
 
 		// Final icon combined both base + overlay
 		icon := image.NewRGBA(iconBase.Bounds())
 		draw.Draw(icon, icon.Bounds(), &image.Uniform{color.Black}, image.Point{0, 0}, draw.Over)
 		draw.Draw(icon, icon.Bounds(), iconBase, image.Point{0, 0}, draw.Over)
 
-		resizedOverlay := resize(iconOverlay, icon.Rect, env.ICON_SCALER)
+		resizedOverlay := resize(iconOverlay, icon.Rect, env.GI_ICON_SCALER)
 		draw.Draw(icon, icon.Bounds(), resizedOverlay, image.Point{0, 0}, draw.Over)
 
 		// Saving final icon
-		saveIcon(icon, env.DESTINATION_ICONS_SET+iconFile.Name())
+		saveIcon(icon, env.GI_DESTINATION_ICONS_SET+iconFile.Name())
 	}
 	fmt.Println("Icons generated !!")
 }
